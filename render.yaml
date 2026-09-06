@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: spotshare-api
+    name: spotshare-backend
     runtime: node
     plan: free
     rootDir: server
@@ -12,19 +12,17 @@ services:
         value: 20.11.0
       - key: DATABASE_URL
         fromDatabase:
-          name: spotshare-db
+          name: spotshare-postgres
           property: connectionString
       - key: NOMINATIM_USER_AGENT
         value: "SpotShare/1.0 (+https://render.com)"
-      # Fill these in with your deployed frontend URL once it exists (e.g.
-      # the Vercel URL from step 2 of DEPLOY.md), then save to redeploy.
       - key: CLIENT_ORIGIN
-        value: "http://localhost:5173"
+        value: "https://spotshare-psi.vercel.app"
       - key: PUBLIC_APP_URL
-        value: "http://localhost:5173"
+        value: "https://spotshare-psi.vercel.app"
 
 databases:
-  - name: spotshare-db
+  - name: spotshare-postgres
     plan: free
     databaseName: spotshare
     user: spotshare

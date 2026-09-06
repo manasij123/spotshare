@@ -9,11 +9,11 @@ This deploys the backend (API + Postgres) to **Render** and the frontend to
 2. Click **New +** → **Blueprint**.
 3. Pick the `manasij123/spotshare` repo (branch: `main`).
 4. Render detects `render.yaml` at the repo root — it defines a web service
-   (`spotshare-api`) and a free Postgres database (`spotshare-db`). Click
+   (`spotshare-backend`) and a free Postgres database (`spotshare-postgres`). Click
    **Apply**.
-5. Wait for the build to finish, then open the `spotshare-api` service and
+5. Wait for the build to finish, then open the `spotshare-backend` service and
    copy its URL from the top of the page — something like
-   `https://spotshare-api.onrender.com`. You'll need it in step 2.
+   `https://spotshare-backend.onrender.com`. You'll need it in step 2.
 
 Notes: the free web service spins down after ~15 minutes of no traffic (the
 first request after that takes ~30s to wake it up), and the free Postgres
@@ -28,7 +28,7 @@ a permanent deployment.
    Vite framework once you do).
 4. Add an environment variable:
    - `VITE_API_BASE_URL` = the Render URL from step 1 (no trailing slash),
-     e.g. `https://spotshare-api.onrender.com`
+     e.g. `https://spotshare-backend.onrender.com`
 5. Click **Deploy**. When it finishes, open the project and copy its URL,
    e.g. `https://spotshare.vercel.app`.
 
@@ -36,7 +36,7 @@ a permanent deployment.
 
 Share links and CORS need to know the frontend's real URL:
 
-1. Back on Render, open the `spotshare-api` service → **Environment**.
+1. Back on Render, open the `spotshare-backend` service → **Environment**.
 2. Set:
    - `CLIENT_ORIGIN` = your Vercel URL (e.g. `https://spotshare.vercel.app`)
    - `PUBLIC_APP_URL` = the same Vercel URL
