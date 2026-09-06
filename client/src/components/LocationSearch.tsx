@@ -106,7 +106,7 @@ export default function LocationSearch({ onSelect }: LocationSearchProps) {
         <div
           id="location-search-results"
           role="listbox"
-          className="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg"
+          className="absolute z-[1200] mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg"
         >
           {error && results.length === 0 && (
             <div className="flex items-center gap-2 px-4 py-3 text-sm text-slate-600">
