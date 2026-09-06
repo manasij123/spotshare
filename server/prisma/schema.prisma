@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ShareStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+/// A temporary, shareable pickup point / meeting-location link.
+model Share {
+  id          String @id @default(cuid())
+  /// Public-facing random token used in share URLs (/share/:publicToken).
+  /// The internal `id` is never exposed to clients.
+  publicToken String @unique
+
+  placeName        String
+  formattedAddress String
+  latitude         Float
+  longitude        Float
+  /// Geocoding provider's place identifier, if the provider supplies one.
+  placeProviderId  String?
+
+  /// Optional short instruction shown to the recipient (e.g. "Wait near the main gate.")
+  note String?
+
+  status    ShareStatus @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  expiresAt DateTime
+
+  /// Reserved for future authentication; unused in the MVP.
+  createdBy String?
+
+  // --- Future-ready movement/simulation fields (not used by the MVP) ---
+  // A future version may animate a marker along a predefined route for
+  // in-app visualization only. This never touches device/browser GPS.
+  startLatitude           Float?
+  startLongitude          Float?
+  endLatitude             Float?
+  endLongitude            Float?
+  movementDurationSeconds Int?
+  /// Ordered list of [lat, lng] waypoints, stored as JSON.
+  routeCoordinates        Json?
+
+  @@index([status, expiresAt])
+}
